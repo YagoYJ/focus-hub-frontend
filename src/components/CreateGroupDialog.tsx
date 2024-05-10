@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { createGroupSchema } from "@/actions/types";
-import { useCreateGroup } from "@/data/groups/useGetGroups";
+import { useCreateGroup } from "@/data/groups/useCreateGroup";
 import { useState } from "react";
 
 export function CreateGroupDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: createGroup, isPending } = useCreateGroup({
-    closeDialog: () => setIsOpen(false)
+    closeDialog: () => setIsOpen(false),
   });
   const form = useForm<z.infer<typeof createGroupSchema>>({
     resolver: zodResolver(createGroupSchema),
@@ -38,7 +38,7 @@ export function CreateGroupDialog() {
   });
 
   function onSubmit(values: z.infer<typeof createGroupSchema>) {
-      createGroup(values);
+    createGroup(values);
   }
 
   return (
@@ -76,6 +76,7 @@ export function CreateGroupDialog() {
                     <Input
                       placeholder="Type a good name!"
                       className="leading-relaxed"
+                      disabled={isPending}
                       {...field}
                     />
                   </FormControl>
@@ -84,16 +85,9 @@ export function CreateGroupDialog() {
               )}
             />
 
-            {isPending ? (
-              <Button className="self-end" type="submit" disabled>
-                <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-              </Button>
-            ) : (
-              <Button className="self-end" type="submit">
-                Submit
-              </Button>
-            )}
+            <Button className="self-end" type="submit" isLoading={isPending}>
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
