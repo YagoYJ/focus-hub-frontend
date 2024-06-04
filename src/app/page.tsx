@@ -1,7 +1,26 @@
-export default function Home() {
+import { Header } from "@/components/Header";
+import { Groups } from "@/components/Groups";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { getGroups } from "@/actions/groups";
+import { queryClient } from "@/lib/queryClient";
+
+export default async function Home() {
+  await queryClient.prefetchQuery({
+    queryKey: ["groups"],
+    queryFn: getGroups,
+  });
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl">Focus Hub</h1>
-    </main>
+    <div className="min-w-screen min-h-screen flex flex-col items-center">
+      <Header />
+
+      <main className="w-11/12 max-w-5xl mb-8">
+        <h2 className="my-8 text-3xl font-bold">Groups</h2>
+
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Groups />
+        </HydrationBoundary>
+      </main>
+    </div>
   );
 }
