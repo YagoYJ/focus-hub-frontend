@@ -6,14 +6,14 @@ import { z } from "zod";
 
 const useGetPrioritiesGroupSchema = z.object({
   groupId: z.string().uuid(),
-  limit: z.number().positive()
+  limit: z.number().positive().optional()
 });
 
 type UseGetPrioritiesGroup = z.infer<typeof useGetPrioritiesGroupSchema>
 
-export function useGetPrioritiesGroup({ groupId, limit }: UseGetPrioritiesGroup) {
+export function useGetPrioritiesGroup({ groupId, limit = undefined }: UseGetPrioritiesGroup) {
   return useQuery({
     queryFn: async () => getPrioritiesByGroup({ groupId, limit }),
-    queryKey: ["priorities", { id: groupId }],
+    queryKey: ["priorities", { groupId }],
   });
 }

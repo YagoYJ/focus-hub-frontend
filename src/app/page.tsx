@@ -1,10 +1,6 @@
 import { Header } from "@/components/Header";
 import { Groups } from "@/components/Groups";
-import { Toaster } from "@/components/ui/Sonner";
-import {
-  HydrationBoundary,
-  dehydrate,
-} from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getGroups } from "@/actions/groups";
 import { queryClient } from "@/lib/queryClient";
 
@@ -25,8 +21,6 @@ export default async function Home() {
           <Groups />
         </HydrationBoundary>
       </main>
-
-      <Toaster richColors />
     </div>
   );
 }

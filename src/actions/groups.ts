@@ -10,6 +10,12 @@ export async function getGroups() {
   return data;
 }
 
+export async function getGroupById(groupId: string) {
+  const { data } = await api.get<Group>(`/groups/${groupId}`);
+
+  return data;
+}
+
 export async function createGroup({ name }: CreateGroup) {
   try {
     const {data} = await api.post<Group>("/groups", { name });
