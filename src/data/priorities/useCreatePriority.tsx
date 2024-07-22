@@ -7,9 +7,10 @@ import { toast } from "sonner";
 
 type UseCreateGroupProps = {
   closeDialog: () => void;
+  clearInputs: () => void;
 };
 
-export function useCreatePriority({ closeDialog }: UseCreateGroupProps) {
+export function useCreatePriority({ closeDialog, clearInputs }: UseCreateGroupProps) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -27,6 +28,7 @@ export function useCreatePriority({ closeDialog }: UseCreateGroupProps) {
 
       toast.success(`The priority ${name} was created`);
 
+      clearInputs()
       closeDialog();
     },
     onError: (error: string) => {

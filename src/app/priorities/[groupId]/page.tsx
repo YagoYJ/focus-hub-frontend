@@ -78,7 +78,7 @@ export default function Priorities({ params: { groupId } }: PropertiesParams) {
               <aside className="flex-1">
                 <PriorityDetails
                   groupId={groupId}
-                  priorityId={activePriority || validData.data[0].id}
+                  priorityId={activePriority || ''}
                 />
               </aside>
             </div>

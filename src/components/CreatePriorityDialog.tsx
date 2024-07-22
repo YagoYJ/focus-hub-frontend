@@ -30,16 +30,17 @@ export function CreatePriorityDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const { groupId } = useParams<{ groupId: string }>();
 
-  const { mutate: createPriority, isPending } = useCreatePriority({
-    closeDialog: () => setIsOpen(false),
-  });
-
   const form = useForm<z.infer<typeof createPrioritySchema>>({
     resolver: zodResolver(createPrioritySchema),
     defaultValues: {
       name: "",
       description: "",
     },
+  });
+
+  const { mutate: createPriority, isPending } = useCreatePriority({
+    closeDialog: () => setIsOpen(false),
+    clearInputs: form.reset,
   });
 
   function onSubmit(values: z.infer<typeof createPrioritySchema>) {
